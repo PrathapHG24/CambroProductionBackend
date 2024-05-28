@@ -34,7 +34,7 @@ public class IdentifyController {
 //     @PostMapping("/identify")
 // public ResponseEntity<Object> identifyTableAndDatabase(@RequestBody Map<String, String> jsonInput) {
 //     try {
-//         String targetDatabase = "cambro_data"; // Specify the target database name here
+//         String targetDatabase = "mold1"; // Specify the target database name here
 //         List<Map<String, String>> tables = this.tableService.getAllTables(targetDatabase);
 //         HashMap<String, Set<String>> tableColumns = new HashMap<>();
 //         HashMap<String, String> tableDatabase = new HashMap<>();
@@ -91,7 +91,7 @@ public ResponseEntity<Object> identifyTableAndDatabase(@RequestBody Map<String, 
 System.out.println(jsonInput.toString());
 
     try {
-        String targetDatabaseName = "cambro_data"; // Change this to your target database name
+        String targetDatabaseName = "mold1"; // Change this to your target database name
         List<Map<String, String>> tables = this.tableService.getAllTables(targetDatabaseName);
         HashMap<String, Set<String>> tableColumns = new HashMap<>();
         HashMap<String, String> tableDatabase = new HashMap<>();

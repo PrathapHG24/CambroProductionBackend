@@ -9,6 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
+
+import com.demo.service.UserEventService;
+
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -16,6 +19,8 @@ import javax.transaction.Transactional;
 @Service
 public class MappingService {
     private static final Logger logger = LoggerFactory.getLogger(MappingService.class);
+    @Autowired
+    UserEventService userEventService;
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
@@ -70,7 +75,7 @@ public class MappingService {
             LocalDateTime endTime = LocalDateTime.now();
 
             // Construct the SQL query
-            String sql = String.format("UPDATE %s.%s SET endTime = ? WHERE scheduleOlsnReleaseBarcode = ?", dbName, tableName);
+            String sql = String.format("UPDATE %s.%s SET endTime = ? WHERE Schedule_Olsn_Release_Barcode = ?", dbName, tableName);
 
             // Execute the update query
             int rowsAffected = jdbcTemplate.update(sql, endTime, scheduleID);
@@ -89,7 +94,7 @@ public class MappingService {
     }
      
     public List<String> saveJsonKeyVariables1(List<Map<String, Object>> dataList) throws SQLException {
-        String dbName = "cambro_data";
+        String dbName = "mold1";
         String tableName = "variableandplctag";
         String keyColumnName = "jsonVariable";
         List<String> insertedKeys = new ArrayList<>();
@@ -144,13 +149,14 @@ public class MappingService {
     // scheduleId Save feature
     public String saveScheduleID(String scheduleID) {
         try {
-        String tableName = "cambro_data.scheduleid";
-        String sql = String.format("INSERT INTO %s (scheduleID) VALUES (?)", tableName);
+        userEventService.updateWithScheduleId(scheduleID);
+        // String tableName = "mold1.scheduleid";
+        // String sql = String.format("INSERT INTO %s (scheduleID) VALUES (?)", tableName);
 
-        // Execute the query using JdbcTemplate
-        jdbcTemplate.update(sql, scheduleID);
-        logger.info("Updated scheduleId {} Saved Successfully {}", scheduleID);
-        return "scheduleId Saved Successfully";
+        // // Execute the query using JdbcTemplate
+        // jdbcTemplate.update(sql, scheduleID);
+        // logger.info("Updated scheduleId {} Saved Successfully {}", scheduleID);
+           return "scheduleId Saved Successfully";
     } catch (DataAccessException e) {
         logger.error("Error in saving scheduleId {} in database {}: {}", e.getMessage(), e);
         return "Error in Saving the dat: " + e.getMessage();
@@ -160,7 +166,7 @@ public class MappingService {
    //to get the scheduleID
     public List<Map<String, String>> getAllScheduleIDs() {
         //String tableName = "scheduledb.scheduleid";
-        String sql = "SELECT scheduleID FROM cambro_data.scheduleid";
+        String sql = "SELECT scheduleID FROM mold1.scheduleid";
         return jdbcTemplate.query(sql, (rs, rowNum) -> {
             Map<String, String> scheduleId = new HashMap<>();
             scheduleId.put("name", rs.getString(1));

@@ -23,7 +23,7 @@ import org.springframework.stereotype.Service;
     private JdbcTemplate jdbcTemplate;
    ////this is to save jsonVariable
     // public List<String> saveJsonKeyVariables(List<Map<String, Object>> dataList) throws SQLException {
-    //     String dbName = "cambro_data";
+    //     String dbName = "mold1";
     //     String tableName = "variableandplctag";
     //     String columnName="jsonVariable";
     //     List<String> insertedKeys = new ArrayList<>();
@@ -53,7 +53,7 @@ import org.springframework.stereotype.Service;
     //     }
     // }
     public List<String> saveJsonKeyVariables(List<Map<String, Object>> dataList) throws SQLException {
-        String dbName = "cambro_data";
+        String dbName = "mold1";
         String tableName = "variableandplctag";
         String keyColumnName = "jsonVariable";
         String valueColumnName = "plcTag";
@@ -96,7 +96,7 @@ import org.springframework.stereotype.Service;
 
     //to read the available jsonVariables and plcTags
     public List<Map<String, Object>> getAllDataFromTable() throws SQLException {
-        String dbName = "cambro_data";
+        String dbName = "mold1";
         String tableName = "variableandplctag";
         List<Map<String, Object>> dataList = new ArrayList<>();
         try {
@@ -121,7 +121,7 @@ import org.springframework.stereotype.Service;
 
     ///this to update the plcTag 
     public void updatePlcTagBasedOnJsonVariable(String jsonVariable, String PlcTag) throws SQLException {
-        String dbName = "cambro_data";
+        String dbName = "mold1";
         String tableName = "variableandplctag";
         try {
             // Construct SQL query to update plcTag based on jsonVariable

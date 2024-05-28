@@ -16,14 +16,17 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.demo.mappingService.MappingService;
+import com.demo.service.UserEventService;
 import com.demo.util.ApiRespons;
 import com.demo.util.ApiResponse;
 import com.demo.util.ApiResponse1;
 
 @RestController
 @RequestMapping("/mapping")
-@CrossOrigin("*")
 public class MappingController {
+
+     @Autowired
+    private UserEventService userEventService;
 
     @Autowired
     private MappingService mappingService;
@@ -55,6 +58,7 @@ public class MappingController {
     @PostMapping("/updateEndTime")
     public ResponseEntity<ApiRespons> updateEndTime(@RequestParam String dbName, @RequestParam String tableName, @RequestParam String scheduleID) {
         try {
+            userEventService.updateBatchEndTime();
             String result = mappingService.updateEndTime(dbName, tableName, scheduleID);
             ApiRespons response = new ApiRespons(result, null);
             return ResponseEntity.ok(response);
@@ -67,7 +71,7 @@ public class MappingController {
     
     //to save the schedule id
     @CrossOrigin("*")
-    @PostMapping("/saveSchedulId")
+    @PostMapping("/saveSchedulerId")
     public ResponseEntity<ApiResponse<String>> saveScheduleID(@RequestParam String scheduleID) {
        
         try {

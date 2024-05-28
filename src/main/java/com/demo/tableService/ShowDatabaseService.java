@@ -16,8 +16,8 @@ public class ShowDatabaseService {
 
     public List<Map<String, String>>getAllDatabases() {
         //String sql = "SHOW DATABASES;";
-        //it will show only cambro_data schema
-        String sql = "SHOW DATABASES LIKE 'cambro_data';";
+        //it will show only mold1 schema
+        String sql = "SHOW DATABASES LIKE 'mold1';";
         return jdbcTemplate.query(sql, (rs, rowNum) -> {
             Map<String, String> database = new HashMap<>();
             database.put("name", rs.getString(1));
