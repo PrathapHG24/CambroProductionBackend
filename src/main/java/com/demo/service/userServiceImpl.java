@@ -5,6 +5,7 @@ import com.demo.model.User;
 import com.demo.model.userRole;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Set;
 
@@ -44,9 +45,19 @@ public class userServiceImpl implements UserService {
     }
 
     @Override
-    public void deleteUser(Long userId) {
-        this.userRepository.deleteById(userId);
-    }
+    @Transactional
+    public void deleteUserByUserName(String username) {
+        // Step 1: Fetch the user by username
+        User user = userRepository.findByuserName(username);
+        if (user != null) {
+            // Step 2: Get the user ID
+            Long userId = user.getId();
 
+            // Step 3: Delete the user by ID
+            userRepository.deleteById(userId);
+        } else {
+            throw new RuntimeException("User not found with username: " + username);
+        }
+    }
 }
 

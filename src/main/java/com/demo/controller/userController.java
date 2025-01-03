@@ -6,6 +6,7 @@ import com.demo.model.User;
 import com.demo.model.userRole;
 import com.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
@@ -51,13 +52,10 @@ public class userController {
         return this.userService.getUser(uname);
     }
 
-    @DeleteMapping("/{userId}")
+    @DeleteMapping("/{userName}")
     @CrossOrigin("*")
-    public void deleteUser(@PathVariable("userId") Long uid)
-    {
-                System.out.println(uid);
-        this.userService.deleteUser(uid);
+     public ResponseEntity<String> deleteUser(@PathVariable String userName) {
+        userService.deleteUserByUserName(userName);
+        return ResponseEntity.ok("User deleted successfully");
     }
-
 }
-
